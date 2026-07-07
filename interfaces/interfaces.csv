@@ -1,0 +1,20 @@
+interface,business,category,capabilities_delivered,ai_features,status,source,note
+# Backing dataset for the `Interface` object. Columns = its ontology properties, 1:1, + the of-link FK (business) + provenance. The app the user touches; operating data lives on the Business (../world-model/company/businesses.csv).
+aol,aol,email/news/search,email · news feed · search · consumer security/identity add-ons,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+brightcove,brightcove,enterprise video,enterprise video delivery · streaming infrastructure,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+eventbrite,eventbrite,event ticketing,ticketing · event discovery · payment rails,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+evernote,evernote,productivity/notes,capture · notes/OCR · personal archive · search-over-your-stuff,relaunched on AI,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+harvest,harvest,time-tracking/invoicing,time-tracking · invoicing,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+komoot,komoot,outdoor route planning,route planning · outdoor navigation · GPS activity log,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+loomly,loomly,social-media mgmt,social scheduling,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+meetup,meetup,community/events,group formation · local community/RSVP,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+mileiq,mileiq,mileage tracking,mileage/location logging,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+itranslate,mosaic,translation,translation,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+robokiller,mosaic,call-blocking,call blocking,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+remini,remini,consumer AI photo/video,image/video enhancement · generative restoration,AI-native,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+splice,splice,mobile video editing,mobile video editing,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+streamyard,streamyard,creator live-streaming,live-streaming · multi-cast production,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+tractive,tractive,pet GPS/health,pet GPS tracking · activity/health monitoring (hardware + app),n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+vimeo,vimeo,video hosting,video hosting/distribution,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+wetransfer,wetransfer,file transfer/storage,large-file transfer · ephemeral delivery,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today
+issuu,issuu,digital publishing,digital publishing · flipbook distribution,n.d.,live,bsp-f1,surface descriptions per ~L377-397; capabilities are bundled in this surface today

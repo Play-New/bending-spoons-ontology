@@ -1,0 +1,57 @@
+# The scouting THESIS — the parameterization of the radar. This file IS the strategy;
+# the script is a generic engine. This default mirrors the subject's contract
+# (capabilities/actions/market-radar.md + the Target gates in ontology.md §1).
+# To decline the radar for ANOTHER acquirer: copy this file, change the values, pass --thesis.
+name: bending-spoons
+description: mature consumer/prosumer digital businesses with loyal bases, buyable now
+
+# the mechanical band + region gates (checked structurally where data exists)
+band_usd_m: [50, 5000]
+regions: [north-america, europe]          # HQ gate
+sector_hints:                              # SIC/industry keywords = "is it in-thesis?" (coarse — SIC lags the
+  # real business; kept tight to software/internet/data and away from telecom/hardware/IT-services)
+  [software, internet, data, information, media, computer programming, computer processing, information retrieval]
+
+# the watch signals: bucket name -> keywords (title matching, lowercase)
+signals:
+  distress: [layoff, layoffs, laid off, lays off, job cuts, cut jobs, restructuring,
+             cost cut, cost-cutting, downsizing, losses, cash crunch, distress,
+             bankruptcy, shut down, shutting down, sunset]
+  ownership: [acquisition, acquire, for sale, sale of, divest, spin off, spinoff,
+              take private, buyout, new owner, founder leaves, ceo steps down,
+              ceo departs, parent company, explores sale, strategic alternatives]
+  momentum: [decline, declining, shrinking, losing users, churn, stagnant, flat growth,
+             down year, user exodus, migration away, alternatives to]
+  valuation: [valuation, down round, writedown, write-down, cheap, undervalued,
+              market cap, multiple compression]
+  ai-pressure: [ai replaces, ai alternative, chatgpt, llm, ai disruption, ai-native,
+                ai competitor, obsolete, commoditized]
+  loyal-base: [still use, still using, still the best, loyal, beloved, cult following,
+               community saved, saved it, nostalgia, comeback, can't live without,
+               keeps me, irreplaceable]
+
+# maturity ranking: weights per signal; quality multipliers don't add, they multiply
+weights: {ownership: 3.0, distress: 2.5, momentum: 2.0, valuation: 1.5, ai-pressure: 1.5}
+quality_multipliers: {loyal-base: 1.3}
+
+# structured-tier event queries (EDGAR full-text, 8-K language)
+event_queries: ['"strategic alternatives"', '"review of strategic options"',
+                '"divestiture"', '"sale of the company"']
+
+# noise controls
+out_of_band: [meta, facebook, instagram, whatsapp, microsoft, google, alphabet, apple,
+              amazon, aws, netflix, nvidia, tesla, openai, anthropic, oracle, salesforce,
+              adobe, ibm, intel, samsung, sony, xbox, playstation, youtube, tiktok,
+              bytedance, x.com, twitter, spacex, uber, airbnb, spotify, paypal, stripe,
+              shopify, zoom, slack, linkedin, reddit, snapchat, pinterest]
+
+# dedup against the acquirer's own model: owned assets + pipeline (csv, key column)
+dedup:
+  owned:
+    - {csv: world-model/company/businesses.csv, column: business}
+    - {csv: interfaces/interfaces.csv, column: interface}
+  pipeline:
+    - {csv: world-model/customer/targets.csv, column: target, status_column: status}
+
+# press-recipe languages for tier-3 WebSearch (local-language for EU targets)
+press_languages: [en, it, de, fr, nl]

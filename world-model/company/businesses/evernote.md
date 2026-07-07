@@ -1,0 +1,61 @@
+---
+id: evernote
+type: business
+title: Evernote
+status: confirmed
+purpose: A mature note-taking / knowledge-management business acquired and reorganized by Bending Spoons — a worked example of the acquire-transform-optimize machine turning a declining asset into a cash generator.
+provenance: official-filing
+as_of: 2026-03-31        # period of the underlying data (Q1 2026; later events cited in prose)
+last_synced: 2026-07-04  # last verified against sources/
+sources: [bsp-f1, bsp-424b4, site-evernote]
+properties:
+  revenue_usd_m: n.d.
+  mau_m: n.d.
+  paying_customers_m: n.d.
+  nrr_pct: 99
+  tenure_yrs: 7.2
+  arpu: n.d.
+  revenue_mix: freemium subscription
+  organic_channel_pct: n.d.
+  conversion_pct: n.d.
+  adj_op_margin_pct: n.d.
+  status: main
+  lifecycle: optimized
+relations:
+visibility: shared
+---
+# Evernote
+
+**Properties** → structured in the frontmatter above, 1:1 with `../businesses.csv` (per `../../../ontology.md` §1 `Business`; name = the title/PK). Operating data only — price, date, deal-type and PPA are the `Deal`'s (`../deals.csv`); the app the user touches is the `Interface` (`../../../interfaces/`).
+**Links:** none declared on `Business` (`Deal —produces→`, `Platform —operates→`, `Spooners —deployed-on→`, `Tool —deployed-across→`, `Interface —of→` are declared on those objects). No business↔business or business↔customer link exists — that absence is the gap (`../../customer/cross-product-graph.md`).
+
+
+## What it is
+Evernote is a productivity suite that supports note-taking and knowledge management for individuals and teams (bsp-f1 ~L384; bsp-424b4 ~L364). Its own site positions it as a "second brain" that helps users "remember everything and tackle any project with your notes, tasks, and schedule all in one place," targeting individuals, professionals, enterprises, and students (site-evernote, https://evernote.com). It is one of Bending Spoons' main businesses: in Q1 2026 Evernote was named among the businesses (alphabetically AOL, Brightcove, Eventbrite, Evernote, Harvest, komoot, Remini, StreamYard, Vimeo, WeTransfer) that together accounted for more than 80% of company revenue (bsp-f1 ~L375; bsp-424b4 ~L355). At acquisition Evernote was already at scale: more than 200 million people had created an Evernote account prior to the acquisition, and the average customer tenure was 7.2 years (bsp-f1 ~L2702–2706; bsp-424b4 ~L2694–2696). The product is now operated by Bending Spoons US Inc., whose copyright and "About Bending Spoons" links appear in the site footer (site-evernote, https://evernote.com).
+
+## The deal
+On January 3, 2023, Bending Spoons completed the acquisition of 100% of the issued and outstanding equity securities of Evernote Corporation — a Delaware corporation and the owner of Evernote — for a total consideration of $199.7 million, accounted for as a business combination (bsp-f1 ~L4914–4917; bsp-424b4 ~L5018–5021). The consideration was fully settled in cash, with no contingent consideration or deferred payments (bsp-f1 ~L4910–4911). Transaction costs (professional fees) of $1.8 million were recognized in G&A expense (bsp-f1 ~L4918; bsp-424b4 line ~5022). The purchase-price allocation set the fair value of net assets acquired at $199.692 million: goodwill $161.387 million, customer base $66.909 million (10-year useful life), other intangible assets $31.609 million (mainly trademarks, 10-year life), intellectual properties $8.577 million (5-year life), plus $29.106 million cash acquired and other assets, against $124.358 million of liabilities assumed (bsp-f1 ~L4921–4922). Goodwill of $161 million was attributable to the Evernote acquisition and reflects expected earnings expansion from transformation and ongoing optimization executed through the Platform (bsp-f1 ~L5062, ~L5071). For the stub period from the acquisition date (January 3 to December 31, 2023), the consolidated income statement included Evernote revenue of $95.0 million and income before tax of $11.3 million (bsp-f1 ~L4922; bsp-424b4 ~L5026).
+
+## The playbook applied (where the OFFICIAL record shows it)
+The filings state plainly that at Evernote the company "rearchitected the organization, modernized the technology, accelerated product development, and rethought marketing and monetization" (bsp-f1 ~L130; bsp-424b4 ~L107).
+
+Organization. Within the first year, the team was rebuilt for cost efficiency and execution speed: full-time-equivalent team members dedicated to Evernote fell from 341 at acquisition to 60 (nearly all Spooners) by end of 2024 — a reduction of 82% — and management layers were cut from four to two (bsp-f1 ~L2715–2716; bsp-424b4 ~L2707). The reorganization is repeatedly cited in the expense analysis: reductions in personnel costs "associated with the ongoing operations of Evernote after its reorganization in 2023" partly offset rising R&D, sales-and-marketing, and G&A expense (bsp-f1 ~L1882, ~L1886, ~L1890). In 2023, reorganization-related expense was driven by separation packages for the Evernote reorganization (bsp-f1 ~L1949), and Evernote also appears in the Q1 2025 list of businesses whose reorganizations drove separation-package expense (bsp-f1 ~L1963). In July 2025 roughly half of the remaining Evernote team was redeployed to staff the newly acquired Harvest business, executed smoothly on the foundations already in place (bsp-f1 ~L2721–2722; bsp-424b4 ~L2713–2714). Product-release cadence rose with the reorganization: releases grew 50% in 2023, doubled in 2024, and the team shipped over 150 updates in 2025 (bsp-f1 ~L2718, ~L2723).
+
+Technology. The dated, monolithic architecture was dismantled into microservices, and the client-server model was modernized from polling-based to event-driven, cutting infrastructure load and improving responsiveness and cross-device consistency (bsp-f1 ~L2724–2727; bsp-424b4 ~L2716–2719). Together with other initiatives this reduced IT infrastructure expense as a percentage of revenue by 47% in 2025 versus 2022 (bsp-f1 ~L2730). Codebase streamlining cut median note-opening time by 35% across all devices in 2025 (bsp-f1 ~L2732). From 2023 through 2025 the team shipped over 6,000 reliability-related enhancements, ultimately reaching a point where a dedicated reliability team was no longer required in 2025 (bsp-f1 ~L2735).
+
+Product and AI. AI was first integrated into Evernote's core workflows in 2023 (note search and editing), extended in 2024 with image and audio transcription, and in early 2026 the company shipped Evernote v11 — the product's most significant update under its ownership, three years post-closing — upgrading search and adding meeting recording, transcription, and synthesis plus a chat interface over notes, tasks, and calendar (bsp-f1 ~L2649, ~L2743–2745; bsp-424b4 ~L2641, ~L2735–2737). The company estimates AI-driven features have already contributed to more than 2 million additional registrations and 50,000 incremental subscription conversions (bsp-f1 ~L2746). Evernote is cited among the businesses where AI-based features have been introduced (bsp-f1 ~L1794; bsp-424b4 ~L1784).
+
+Marketing and monetization. New-user registration growth had been negative for years — (23)% in 2021, (23)% in 2022, (20)% in 2023 — then reversed to +29% in 2024 and +20% in 2025 (bsp-f1 ~L2747–2749). From 2023–2025 the team ran more than 200 experiments (retention, price points, onboarding) (bsp-f1 ~L2750). A consequential change gave non-paying users access to all features while introducing usage limits on selected functionality; usage-limit-triggered conversions roughly doubled in 2024 versus 2022 (the last full pre-acquisition year) and accounted for 51% of all conversions in 2025 (bsp-f1 ~L2753–2754). Subscription plans were rearchitected to align pricing with how different customer segments, including enterprises, engage with the product (bsp-f1 ~L2755; bsp-424b4 ~L2747). The net result: average revenue per monthly active user was 2.5 times as high in 2025 as in 2022 (bsp-f1 ~L2756). At the aggregate level, the 2024 increase in Evernote revenue "was driven by higher subscription revenue resulting from an increase in average revenue per subscriber, partly offset by a decrease in the number of subscribers" (bsp-f1 ~L1865; bsp-424b4 ~L1855) — more value from a shrinking, committed base. Net cash from operating activities grew 246% from 2023 to 2024 "primarily driven by improved cash generation at Evernote following our transformation of the business" (bsp-f1 ~L2029; bsp-424b4 ~L2019), and Evernote was among the largest contributors to the company's 7% organic revenue growth in 2024 (bsp-f1 ~L1864; bsp-424b4 ~L1854).
+
+The current site markets an AI feature set including AI Assistant, Semantic Search, AI Transcribe, AI Edit/Rewrite, AI Text To Speech, an AI Meeting Note Taker, AI Diagrams, and mobile AI Cleanup (site-evernote, https://evernote.com and https://evernote.com/compare-plans). The site's plan structure — Free, Starter, Advanced, Enterprise — shows the monetization lever in the limits: Free is capped at 50 notes / 1 notebook / 1 device / 1GB; Starter at 1,000 notes / 20 notebooks / 3 devices / 5GB; Advanced offers unlimited notes/notebooks/devices/storage; Enterprise is custom with contact-sales pricing (site-evernote, https://evernote.com/compare-plans). Gap: the public pricing/compare pages did not render the actual dollar amounts to the fetch, so specific price points are not stated here.
+
+## What holds the customer
+The load-bearing signal for Evernote is retention of the committed user against churn of the marginal one. The filings report Evernote's net revenue retention, averaged across Q1 2023 through Q1 2026, at 99% — the highest of the businesses broken out (AOL 95%, Remini 87%, StreamYard 91%) (bsp-f1 ~L408; bsp-424b4 ~L388). This was the pre-existing draw: the company cites Evernote's "robust subscriber retention, driven by a rich feature set and a highly engaged and tenured customer base," with many customers holding thousands of notes and workflows built on the product, and an average customer tenure of 7.2 years at the time of acquisition (bsp-f1 ~L2703–2706; bsp-424b4 ~L2695–2696). Paired with the statement that 2024 revenue rose on higher average revenue per subscriber even as the subscriber count fell (bsp-f1 ~L1865), and that ARPU per MAU was 2.5x higher in 2025 than in 2022 (bsp-f1 ~L2756), the picture is a loyal core that absorbs price increases while low-intent users leave. The tight Free tier (50 notes, 1 notebook, 1 device) reinforces this: it funnels anyone with real dependence into a paid plan, and in 2025 usage limits accounted for 51% of all conversions (bsp-f1 ~L2754; site-evernote, https://evernote.com/compare-plans). Interpretation of the retention/pricing interplay as a deliberate willingness-to-pay strategy is inference from the official numbers and is marked [to-validate].
+
+## Where it sits in the machine
+Evernote is a lifecycle-stage "optimized" asset: acquired January 3, 2023, reorganized the same year, and repeatedly cited by the filings as an already-transformed cash generator that the company "continue[s] to optimize" alongside Remini and StreamYard (bsp-f1 ~L134; bsp-424b4 ~L111). It doubles as the company's flagship worked example of the machine — the deep-dive narrates the full arc from a dated, declining asset to a growing, more profitable one, and management expects it "to continue to grow in the coming years" (bsp-f1 ~L2709; bsp-424b4 ~L2701). It also served as a talent reservoir: roughly half the Evernote team was redeployed to launch the Harvest transformation in July 2025 (bsp-f1 ~L2721; bsp-424b4 ~L2713). Its portfolio role is a durable, high-retention subscription cash engine among the main businesses that produce 80%+ of revenue (bsp-f1 ~L375). The filings group video assets (Vimeo, Brightcove) as an enterprise-video cluster but do not describe a productivity cluster around Evernote, so no such clustering is asserted here.
+
+## References
+- `bsp-f1` — Bending Spoons Form F-1 (captured at sources/2026-06-bsp-f1-fulltext.txt).
+- `bsp-424b4` — Bending Spoons 424B4 final prospectus (captured at sources/2026-07-bsp-424b4-fulltext.txt).
+- `site-evernote` — Evernote official site: https://evernote.com and https://evernote.com/compare-plans.

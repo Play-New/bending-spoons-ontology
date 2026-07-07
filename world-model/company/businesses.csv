@@ -1,0 +1,21 @@
+business,revenue_usd_m,mau_m,paying_customers_m,nrr_pct,tenure_yrs,arpu,revenue_mix,organic_channel_pct,conversion_pct,adj_op_margin_pct,status,lifecycle,source,note
+# Backing dataset for the `Business` object. Columns = its ontology properties, 1:1, + provenance (source, note). Operating data only — the acquisition price/PPA are the `Deal`'s (deals.csv).
+# NOTE (a finding in itself): the F-1 discloses metrics at the PORTFOLIO level, rarely per product. Per-product cells are n.d. (not disclosed) unless the filing breaks them out.
+aol,n.d.,n.d.,n.d.,95,n.d.,n.d.,advertising + subscription,n.d.,n.d.,n.d.,main,transforming,bsp-f1,per-business NRR ~95% (~L408)
+brightcove,n.d.,0.015,0.0017,n.d.,n.d.,n.d.,sales-led subscription,n.d.,n.d.,n.d.,main,optimized,bsp-f1,was public; enterprise/B2B; ~15k MAU / ~1.7k monthly paying (~L374)
+eventbrite,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,transaction + subscription,n.d.,n.d.,n.d.,main,transforming,bsp-f1,
+evernote,n.d.,n.d.,n.d.,99,7.2,n.d.,freemium subscription,n.d.,n.d.,n.d.,main,optimized,bsp-f1,NRR ~99% — the loyalty tell (~L408); tenure 7.2 yrs at acquisition (~L2704); ARPU up on falling subs 2024 (~L1865)
+harvest,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,main,transforming,bsp-f1,
+issuu,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,optimized,bsp-f1,ARPU up on falling subs 2025 (~L1872)
+komoot,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,subscription + one-time purchases (~L1689),n.d.,n.d.,n.d.,main,optimized,bsp-f1,ARPU + subs both up Q1 2026 (~L1913)
+loomly,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,optimized,bsp-f1,
+meetup,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,optimized,bsp-f1,ARPU + subs both up 2025 (~L1873)
+mileiq,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,transforming,bsp-f1,
+mosaic,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,transforming,bsp-f1,asset deal 2024 (~L1863); surviving utility apps iTranslate + RoboKiller
+remini,n.d.,n.d.,n.d.,87,n.d.,n.d.,subscription ~85% since 2023 (~L2689) + advertising,n.d.,n.d.,n.d.,main,optimized,bsp-f1,"NRR ~87% (~L408); asset deal, ~20 FTE end-2025 (~L2668)"
+splice,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,tail,optimized,bsp-f1,
+streamyard,n.d.,n.d.,n.d.,91,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,main,optimized,bsp-f1,NRR ~91% (~L408); ARPU up on falling subs 2025 (~L1872)
+tractive,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,excluded,acquired,bsp-f1,"closed 18 May 2026, excluded from all filing stats (~L231)"
+vimeo,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,fixed SaaS subscription fees (~L5851),n.d.,n.d.,n.d.,main,transforming,bsp-f1,was public; ARPU + subs up Q1 2026 (~L1913)
+wetransfer,n.d.,58,1,n.d.,n.d.,n.d.,"subscription + advertising, ads declining (~L1875)",n.d.,n.d.,n.d.,main,optimized,bsp-f1,"58M MAU / 1M paying, Mar 2026 (~L373); ARPU + subs up Q1 2026 (~L1913)"
+# Portfolio-level (not per-product), read as functions over financials.csv: total MAU >500M, paying >9M (Mar 2026); portfolio NRR 93/91/95/94; avg tenure 8.0 yrs; organic channels 76-83% of new-customer revenue (79/76/79/83); conversion organic-registered→subscriber +66% 2025 vs 2023 (~L2806).

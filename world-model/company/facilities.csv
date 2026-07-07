@@ -1,0 +1,11 @@
+facility,type,currency,size_m,signed,status,source,note
+# Backing dataset for the `Facility` object. Columns = its ontology properties, 1:1, + provenance. One row per facility; which facility funded which deal is disclosed only in aggregate (~L3114-3116).
+senior-facilities-agreement,term loan A + RCF (umbrella),EUR/USD,n.d.,2024-07,active,bsp-f1,"Senior Facilities Agreement dated 30 Jul 2024 (~L4124-4137); TLA market tapped since 2017, first TLB only in 2025, no bonds ever (~L1749-1758)"
+eur-tlb,term loan B,EUR,300,2026-01,drawn,bsp-f1,"€300M ($339M); part of the AOL/Eventbrite/Vimeo funding stack (~L3114)"
+usd-tlb,term loan B,USD,950,2026-01-02,drawn,bsp-f1,"dated 2 Jan 2026 (~L3114)"
+usd-tla,term loan A,USD,660,2026-01-02,drawn,bsp-f1,"dated 2 Jan 2026 (~L3114); the US TLA/RCF Credit Agreement bears the same date (~L4128)"
+eur-tla,term loan A,EUR,476,2025-11/12,drawn,bsp-f1,"Facility A2 Tranche 1+2, granted 17 Nov and 23 Dec 2025, €476M ($538M) (~L3114)"
+unicredit-term,bilateral term loan,EUR,150,2026-Q2,drawn,bsp-424b4,"signed and fully drawn after 31 Mar 2026 (~L1543-1549)"
+intesa-term,bilateral term loan,EUR,100,2026-Q2,drawn,bsp-424b4,"signed and fully drawn after 31 Mar 2026 (~L1543-1549)"
+rcf,revolving credit facility,multi,n.d.,n.d.,partially drawn,bsp-424b4,"€260M drawn after 31 Mar 2026 (~L1543-1549); JPMorgan Chase administrative agent, Intesa among lenders (bsp-f1 ~L4125-4126)"
+# Aggregate stack: total debt $4,356M at 31 Mar 2026, $4,942M pro forma post-period (bsp-424b4 ~L1543); the leverage covenant <=4.00 net debt / adj EBITDA binds every row (bsp-f1 ~L4541-4546).

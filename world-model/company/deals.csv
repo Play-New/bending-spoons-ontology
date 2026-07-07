@@ -1,0 +1,21 @@
+produces_business,of_target,date,cohort,deal_type,consideration_usd_m,enterprise_value_usd_m,irr,ppa,source,note
+# Backing dataset for the `Deal` object. Columns = its ontology properties, 1:1, + the two link FKs (produces→business, of→target) + provenance (source, note). One row per acquisition (the EVENT); the business's operating data is separate, on the businesses/ nodes. of_target = n.d. for acquisitions predating the pipeline snapshot in targets.csv (which records only recently-profiled targets).
+remini,n.d.,2021-06,2021,asset-deal,,,,,bsp-f1,"asset deal, no team transferred (~L2656/L2668)"
+evernote,Evernote,2023-01,2023,acquisition,199.7,,,goodwill 161.4 / customer base 66.9 / other (mainly trademarks) 31.6 / IP 8.6,bsp-f1,"acquired 3 Jan 2023, 100% of equity, total consideration $199.7M cash (~L4914); PPA ~L4921-4922"
+streamyard,n.d.,2024-04,2024,acquisition,,,,,bsp-f1,"acquired 23 Apr 2024 (~L2758); no standalone price — combined Meetup+StreamYard+Issuu consideration $280.7M (~L4935)"
+wetransfer,n.d.,2024-07,2024,acquisition,476.3,,,,bsp-f1,"acquired Jul 2024 (~L396); total consideration $476.3M (~L4943)"
+meetup,n.d.,2024-01,2024,acquisition,,,,,bsp-f1,"acquired 23 Jan 2024 (~L2032); no standalone price — combined Meetup+StreamYard+Issuu consideration $280.7M (~L4935)"
+issuu,n.d.,2024-07,2024,acquisition,,,,,bsp-f1,"acquired 18 Jul 2024 (~L4931); no standalone price — combined Meetup+StreamYard+Issuu consideration $280.7M (~L4935)"
+brightcove,Brightcove,2025-02,2025,acquisition,218,,,goodwill 158.9 / customer base 74.6 / IP 14.0 / other 18.0,bsp-f1,"acquired 4 Feb 2025, was public; total consideration $218M (~L4978)"
+komoot,komoot,2025-03,2025,acquisition,,,,,bsp-f1,"acquired 20 Mar 2025 (~L388); no standalone price — combined Loomly+komoot+MileIQ+Harvest consideration $701M (~L4973)"
+loomly,n.d.,2025-01,2025,acquisition,,,,,bsp-f1,"acquired Jan 2025; no standalone price — combined Loomly+komoot+MileIQ+Harvest consideration $701M (~L4973)"
+mileiq,n.d.,2025-06,2025,acquisition,,,,,bsp-f1,"acquired Jun 2025; no standalone price — combined Loomly+komoot+MileIQ+Harvest consideration $701M (~L4973)"
+harvest,n.d.,2025-07,2025,acquisition,,,,,bsp-f1,"acquired 31 Jul 2025 (~L386); no standalone price — combined Loomly+komoot+MileIQ+Harvest consideration $701M (~L4973)"
+mosaic,n.d.,2024,2024,asset-deal,,,,,bsp-f1,"asset deal 2024 (~L1863); price not disclosed"
+splice,n.d.,,,acquisition,,,,,bsp-f1,"date and price not disclosed in the filings"
+vimeo,Vimeo,2025-11,2025,acquisition,1359,,,goodwill 1039.5 / customer base 169.5 / IP 30.9 / other 56.8,bsp-f1,"completed 24 Nov 2025, was public (~L213 / price ~L3114); fair value of net assets acquired $1,358,688K"
+aol,AOL,2026-01,2026,carve-out,1454,,,goodwill 847.9 / customer base 398.7 / IP 56.0 / other 141.7,bsp-f1,"carve-out 2 Jan 2026 (~L216 / ~L950); ex-Verizon Media via an Apollo affiliate (~L5485-5486); voluntary CFIUS notice"
+eventbrite,Eventbrite,2026-03,2026,acquisition,505,,,goodwill 293.3 / customer base 223.0 / IP 29.1 / other 47.8,bsp-424b4,"closed 10 Mar 2026, was public; PPA disclosed (424b4 ~L3211: Other intangible assets 47.8)"
+tractive,n.d.,2026-05,2026,acquisition,781,,,,bsp-f1,"closed 18 May 2026, excluded from operating stats (~L231); $781M at closing + $119M deferred one year after (~L4599; bsp-424b4 ~L4702)"
+# enterprise_value + irr are not disclosed per deal. Aggregate EV by cohort (bsp-f1 ~L333): 2023 $194M · 2024 $876M · 2025 $1.92B · Q1 2026 $2.01B. IRR hurdle 65% lev / 25% unlev applied portfolio-wide (~L110-111).
+# 'take-private' is a press framing, NOT a deal_type: the filings record these as acquisitions of formerly public companies (the notes say 'was public'). PPA components in $M (AOL ~L3225 / Vimeo ~L4998 / Brightcove ~L4984 / Evernote ~L4921 / Eventbrite per bsp-424b4).

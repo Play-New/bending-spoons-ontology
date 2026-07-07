@@ -1,0 +1,17 @@
+bending-spoons-ontology — NOTICE
+
+A demonstrative exercise by Play New. The MIT license (see LICENSE) covers Play New's
+own work in this repository: the software (mcp/, the engine, the audit, the tests) and
+Play New's own expression, selection, and arrangement of the model.
+
+It does NOT grant any rights in the underlying source material. The facts modeled here
+are drawn only from Bending Spoons' public disclosures:
+  - the SEC filings — Form F-1 (June 2026) and the final 424B4 prospectus (July 2026);
+  - Bending Spoons' own published documents (e.g. the hiring documents).
+Those sources are the property of their respective owners. They are used here for
+comment, analysis, and education, with short fair-use quotations only — never reproduced
+in bulk. Third-party press is never treated as fact (it is marked [to-validate]).
+
+This repository is a point-in-time snapshot built from those documents as of their dates.
+It is not maintained or updated, and it is NOT affiliated with, authored by, or endorsed
+by Bending Spoons. The method is the point; Bending Spoons is the example.

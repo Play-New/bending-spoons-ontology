@@ -1,0 +1,136 @@
+# Seed watchlist — PRIVATE / non-listed candidate brands the listed radar (EDGAR/ESEF) can never surface.
+# [to-validate — press only]: human-curated HYPOTHESES (famous consumer/prosumer brands past their peak,
+# loyal base, plausibly under-monetized) — NOT model facts. This is the human perimeter (market-radar
+# contract). Edit freely — add/remove names. Score any with radar_loyalty + radar_scout.
+brand,category,why
+Flickr,photo community,large loyal base past peak and under-monetized
+500px,photography,prosumer base through repeated ownership changes
+DeviantArt,art community,large legacy creative community
+Dribbble,design community,prosumer designer base
+VSCO,photo editing,loyal mobile creator base past its hype peak
+PicsArt,photo editing,huge install base competing down-market
+SmugMug,photo hosting,loyal pro-photographer base (owns Flickr)
+Photobucket,photo hosting,iconic 2000s brand long past peak
+Imgur,image sharing,famous community with unsettled monetization
+PicMonkey,photo editing,legacy consumer editor absorbed and neglected
+Pixlr,photo editing,large free-tool base competing down-market
+BeFunky,photo editing,loyal casual-creator base
+EyeEm,photo marketplace,famous photographer community that went bankrupt and was bought
+Fotor,photo editing,broad consumer editor base
+Piktochart,infographics,prosumer design base plateaued
+SoundCloud,audio / creator,famous creator base with unsettled monetization
+Bandcamp,music commerce,loyal artist-and-fan niche through ownership churn
+Last.fm,music discovery,cult loyal base neglected under its owner
+Discogs,music database,deep loyal collector base
+Mixcloud,audio / DJ,loyal DJ and podcast niche
+Audiomack,music streaming,large emerging-markets base
+ReverbNation,musician tools,legacy artist base plateaued
+Genius,music knowledge,famous lyrics brand past its peak
+Songkick,live music,loyal concert-tracking base
+Beatport,DJ music store,loyal electronic-music niche
+Napster,music streaming,iconic legacy brand repeatedly resold
+BeatStars,beat marketplace,large producer community
+Bandsintown,live music,huge concert-alert base monetized thinly
+Dailymotion,video hosting,legacy video brand behind the leaders
+Vevo,music video,famous catalog brand dependent on platforms
+Wistia,business video,loyal SMB marketing-video base
+Vidyard,business video,prosumer sales-video base
+Crackle,streaming,legacy free-streaming brand faded
+Tumblr,blogging / community,famous and declined with a loyal subculture
+Foursquare,local / location,pivoted to data; the consumer app faded
+Digg,news aggregator,iconic brand long past its peak
+Untappd,social / community,loyal niche beer community
+Goodreads,books / community,huge reader base long neglected
+MyAnimeList,fandom / community,large loyal anime community
+Fandom,wiki / community,vast fan-wiki traffic monetized thinly
+Quora,Q&A / community,famous knowledge brand past its peak
+LiveJournal,blogging,legacy community brand faded in the West
+Clubhouse,audio social,famous pandemic-era brand collapsed to a loyal core
+Yik Yak,local social,iconic campus brand revived small
+Minds,social network,loyal alt-social base
+Ello,creators social,famous anti-Facebook brand faded to a niche
+Whisper,anonymous social,large legacy confession-app base
+Vero,social,ad-free social with a residual creative base
+Medium,publishing,known brand with unresolved monetization
+Scribd,documents / reading,large reading-library base through a rebrand
+SlideShare,presentations,iconic prosumer library long neglected
+Wattpad,storytelling,huge young-writer community
+Blogger,blogging,vast dormant legacy blogging base
+Ghost,publishing,loyal indie-writer subscription base
+Vocal,creator publishing,large creator base monetized thinly
+LibraryThing,books,deep loyal cataloguing community
+Kobo,ebooks,loyal reader base inside a conglomerate
+Prezi,presentations,known prosumer tool that plateaued
+Todoist,productivity,loyal task-manager base in a crowded field
+Any.do,productivity,consumer task app past its peak
+Pocket,read-later,famous save-for-later base being wound down
+Instapaper,read-later,loyal reading-app niche
+Feedly,news reader,loyal RSS base after Reader's death
+Remember The Milk,productivity,cult loyal task-management base
+Things,productivity,loyal premium Apple task app
+Bear,notes,loyal Apple note-taking base
+Simplenote,notes,large free note base long static
+Standard Notes,notes,loyal privacy-focused base
+Roam Research,notes,cult networked-notes base past its hype
+Milanote,visual notes,loyal creative-planning base
+Workflowy,outliner,cult outlining base
+TickTick,productivity,loyal cross-platform task base
+Habitica,productivity,loyal gamified-habit community
+Toggl,time tracking,loyal freelancer and team base
+Basecamp,team tools,famous opinionated brand with a loyal SMB base
+InVision,design tools,collapsed under Figma with residual base
+Marvel,prototyping,prosumer design base overtaken
+Zeplin,design handoff,loyal designer-developer niche
+CodePen,dev community,large front-end developer community
+Glitch,dev / hosting,loyal maker community past its hype
+Sketch,design tools,loyal Mac-design base displaced by Figma
+Balsamiq,wireframing,loyal low-fidelity design base
+Whimsical,diagrams,prosumer diagramming base
+Maze,user testing,prosumer research base
+ProtoPie,prototyping,loyal advanced-prototyping niche
+Cargo,portfolio sites,loyal creative-portfolio base
+Format,portfolio sites,photographer-portfolio base
+Carbonmade,portfolio sites,legacy creative-portfolio brand
+Flipboard,news / magazine,famous curation brand long past peak
+Inoreader,news reader,loyal power-RSS niche
+Diigo,bookmarking,legacy research and bookmark base
+Pinboard,bookmarking,cult paid-bookmarking base
+Raindrop,bookmarking,loyal visual-bookmark base
+Citymapper,transit,famous transit app that stalled and was acquired
+Polarsteps,travel,loyal travel-journaling base
+Rome2Rio,travel,large trip-routing base inside a parent
+Sygic,maps,loyal offline-navigation base
+MyFitnessPal,fitness,huge loyal calorie-tracking base under new owners
+Runkeeper,fitness,legacy running app under ASICS
+Freeletics,fitness,loyal bodyweight-training base
+Sweatcoin,fitness,large move-to-earn base
+Cronometer,nutrition,loyal precise-nutrition base
+Lose It,fitness,legacy weight-loss base
+JEFIT,fitness,loyal strength-training community
+Kik,messaging,famous teen-messaging brand collapsed
+Spark,email,loyal consumer email-client base
+Missive,email,team email with a loyal SMB base
+OkCupid,dating,iconic dating brand inside a portfolio
+Zoosk,dating,legacy dating brand resold
+Coffee Meets Bagel,dating,loyal intentional-dating base
+Happn,dating,proximity-dating base past its peak
+Gilt,ecommerce,famous flash-sale brand long past peak
+RetailMeNot,deals,legacy coupons brand plateaued
+Woot,deals,iconic daily-deal brand inside a giant
+Slickdeals,deals,large loyal deal-hunting community
+Native Instruments,music production (DE),loyal prosumer base through PE restructuring
+Pitch,presentations (DE),well-funded brand that cut deep and pivoted
+Meero,AI photography (FR),ex-unicorn that collapsed to a smaller core
+Prisma,photo AI,cult photo-AI brand faded from its viral peak
+Runtastic,fitness (AT),loyal base past peak inside adidas
+Jodel,local social (DE),famous DACH campus community plateaued
+Lovoo,dating (DE),large German dating base past peak
+Blinkist,book summaries (DE),loyal knowledge base after acquisition
+Busuu,language learning (UK),loyal base inside a parent
+Vivino,wine (DK),huge loyal consumer wine community
+MindMeister,mind-mapping (DE),loyal prosumer productivity base
+Moo,print / design (UK),loyal prosumer design-print base
+Kitchen Stories,cooking (DE),loyal cooking community inside a parent
+Sofatutor,edtech (DE),loyal German learning base
+Qwant,search (FR),struggling privacy-search brand with a loyal niche
+Dubsmash,short video (DE),famous viral brand faded after acquisition
