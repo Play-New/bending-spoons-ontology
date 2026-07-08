@@ -21,22 +21,27 @@ A deterministic cross-cutting check on THIS REPO. It is not one of Bending Spoon
 function: audit                     # the enforcer of the contract (../foundations/ontology.md §5-§6)
 input:
   - scope             # a node, a contract, a backing dataset, or the whole model
-computation — the §5 invariants, checked 1:1 (a §5 invariant with no check here is itself a defect):
-   1. every contract verb ↔ ontology.md §2, declared once, same transaction, checked BOTH ways;
+computation — the §5 invariants, each marked by HOW audit.py enforces it: ✓ mechanically enforced ·
+◐ partially enforced (the decidable part is checked) · ⊘ review-verified (upheld by a human/agent pass —
+no fully mechanical check). "AUDIT GREEN" therefore means "every mechanical check passed", NOT "all eleven
+invariants proven"; the ⊘ items are the reviewer's charge, not a machine guarantee:
+   1. ◐ every contract verb ↔ ontology.md §2, declared once, same transaction, checked BOTH ways;
       a §2 row marked "contract pending" commits nothing
-   2. every property a transaction writes is declared in §1 and is a backing-dataset column (1:1);
-      statically, a node's properties are exactly §1's for its type
-   3. every link a transaction writes is declared once in §1, object↔object, declared direction
-   4. only an action carries a transaction; a function that writes is a defect
-   5. no edit hides in side-effects — a side-effect naming a state change names its committing action
-   6. every gate, rule, and figure cites its source (~L into sources/, will.md, or [decision])
-   7. the runtime (skill/agent) changes only the logic — never the transaction or its gates
-   8. provenance travels with every fact, markers with every inference; weakest marker wins
-      in any reading (press-only is never laundered into an unmarked derived figure)
-   9. provenance of edit: every csv row / node value is attributable to a declared action's
-      transaction — a hand-added row with a resolving citation is still corruption
-  10. a type:function node carries exactly input·computation·output and no write verb
-  11. freshness — every node carries the two clocks (as_of + last_synced); an edit that changes
+      (✓ contract-file ↔ §2 backing, both ways; ⊘ the verb PHRASING in §2 column 1)
+   2. ✓ every property a transaction writes is declared in §1 and is a backing-dataset column (1:1);
+      statically, a node's properties are exactly §1's for its type (node↔csv values AND key-set checked)
+   3. ◐ every link a transaction writes is declared once in §1, object↔object, declared direction
+      (✓ the produces / of / interface FKs resolve; ⊘ the once-only link declaration)
+   4. ✓ only an action carries a transaction; a function that writes is a defect
+   5. ⊘ no edit hides in side-effects — a side-effect naming a state change names its committing action
+   6. ⊘ every gate, rule, and figure cites its source (~L into sources/, will.md, or [decision])
+   7. ⊘ the runtime (skill/agent) changes only the logic — never the transaction or its gates
+   8. ◐ provenance travels with every fact, markers with every inference; weakest marker wins
+      in any reading (✓ a filing-sourced deal is never tagged press-only; ⊘ weakest-marker-wins in general)
+   9. ◐ provenance of edit: every csv row / node value is attributable to a declared action's
+      transaction (✓ FK attribution — no orphan row; ⊘ that a resolving citation ≠ a valid edit)
+  10. ✓ a type:function node carries exactly input·computation·output and no write verb
+  11. ✓ freshness — every node carries the two clocks (as_of + last_synced); an edit that changes
       facts must update last_synced; as_of advances only with a newer source period
   plus the standing checks born from real defects (defect-to-test — each was first found by hand):
   - no figure the source does not support; no disclosed fact negated (the two original defects, below)

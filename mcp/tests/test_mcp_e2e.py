@@ -82,7 +82,7 @@ record(call(s.reject_action, proposal_id=rid, reason="not in thesis").startswith
        "MCP reject_action: the human's no is recorded")
 
 # audit green after the whole MCP-driven lifecycle
-record(subprocess.run(["python3", "mcp/audit.py"], cwd=SBX, capture_output=True, text=True).returncode == 0,
+record(subprocess.run([sys.executable, "mcp/audit.py"], cwd=SBX, capture_output=True, text=True).returncode == 0,
        "audit green after the full MCP-driven loop")
 
 print(json.dumps(R))

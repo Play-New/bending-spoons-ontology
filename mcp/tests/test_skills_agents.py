@@ -66,7 +66,7 @@ for d in skills:
     # bundled scripts run --help
     for s in (d / "scripts").glob("*.py") if (d / "scripts").exists() else []:
         import subprocess
-        r = subprocess.run(["python3", str(s), "--help"], capture_output=True, text=True)
+        r = subprocess.run([sys.executable, str(s), "--help"], capture_output=True, text=True)
         record(r.returncode == 0, f"skill {d.name}: script {s.name} --help runs")
 
 # hire is the read-only hiring assistant: it must NOT be an engine verb and must NOT write the model

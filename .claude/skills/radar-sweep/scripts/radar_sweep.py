@@ -155,10 +155,19 @@ def _load_sic_cache() -> dict:
     return _SIC_HQ_CACHE
 
 
+def _region_ok(loc: str, cfg: dict) -> bool:
+    """North-America = a US state code, Canada, or Puerto Rico; Europe = an EU HQ hint. (Defect-to-test:
+    the gate matched only US 2-letter state codes, silently dropping Canadian- and PR-HQ filers that are
+    in the north-america thesis region.)"""
+    lu = (loc or "").upper()
+    na = lu in US_STATES or lu == "PR" or "CANADA" in lu or "PUERTO RICO" in lu
+    eu = any(h in (loc or "").lower() for h in EU_HINTS)
+    return ("north-america" in cfg["regions"] and na) or ("europe" in cfg["regions"] and eu)
+
+
 def _gate_row(name, m, loc, sic, cfg) -> dict:
     """Apply the mechanical gates (region · sector) to one company's SIC + HQ."""
-    region_ok = ("north-america" in cfg["regions"] and loc.upper() in US_STATES) or \
-                ("europe" in cfg["regions"] and any(h in loc.lower() for h in EU_HINTS))
+    region_ok = _region_ok(loc, cfg)
     sector = "PASS" if any(h in sic.lower() for h in cfg["sector_hints"]) else "JUDGE"
     return {"name": name, "revenue_m": round(m), "hq": loc or "n.d.", "sic": sic,
             "region": "PASS" if region_ok else "FAIL", "sector": sector}
@@ -184,7 +193,7 @@ def discover(year: str, cfg: dict, limit: int = 150) -> dict:
         survivors = [r for r in rows if r["region"] == "PASS" and r["sector"] in ("PASS", "JUDGE")]
         survivors.sort(key=lambda r: (r["sector"] != "PASS", r["revenue_m"]))
         return {"total_in_band": len(band), "screened": len(rows), "errored": uncached,
-                "survivors": survivors, "source": "cache (full universe)"}
+                "survivors": survivors, "source": "cache (full universe)", "universe_errors": u["errors"]}
 
     # fallback: no cache → gate a bounded live slice, concurrently
     step = max(1, len(band) // limit)
@@ -205,7 +214,7 @@ def discover(year: str, cfg: dict, limit: int = 150) -> dict:
     survivors = [r for r in rows if r["region"] == "PASS" and r["sector"] in ("PASS", "JUDGE")]
     survivors.sort(key=lambda r: (r["sector"] != "PASS", r["revenue_m"]))
     return {"total_in_band": len(band), "screened": len(subset), "errored": len(raw) - len(rows),
-            "survivors": survivors, "source": "live slice"}
+            "survivors": survivors, "source": "live slice", "universe_errors": u["errors"]}
 
 
 def hn(query: str, days: int, limit: int) -> list[dict]:
@@ -342,8 +351,7 @@ def gates(ticker: str, cfg: dict) -> dict:
         out["gate_band"] = "n.d. (no annual XBRL revenue)"
     subs = _get(f"https://data.sec.gov/submissions/CIK{cik}.json")
     loc = ((subs.get("addresses", {}).get("business", {}) or {}).get("stateOrCountryDescription") or "")
-    ok = ("north-america" in cfg["regions"] and loc.upper() in US_STATES) or \
-         ("europe" in cfg["regions"] and any(h in loc.lower() for h in EU_HINTS))
+    ok = _region_ok(loc, cfg)
     out["hq"] = loc or "n.d."
     out["gate_region"] = "PASS" if ok else ("n.d. (check manually)" if not loc else "FAIL")
     sic = (subs.get("sicDescription") or "")
@@ -762,7 +770,9 @@ def main() -> None:
         if not results:
             print(f"- no apps found for '{a.query}'")
         for r in results:
-            print(f"- **{r['app']}** ({r['seller']}, {r['genre']}): {r['ratings_count']:,} ratings, avg {r['rating']:.2f}")
+            rc = r["ratings_count"] or 0                 # iTunes returns null for a ratingless app
+            avg = f"{r['rating']:.2f}" if r["rating"] is not None else "n.d."
+            print(f"- **{r['app']}** ({r['seller']}, {r['genre']}): {rc:,} ratings, avg {avg}")
         print("\n_Rating volume ≈ committed-base size; track the count over time for momentum. [derived]_")
         return
 

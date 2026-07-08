@@ -42,7 +42,7 @@ p1b = engine.propose("source", {"target": "RedAuditCo", "revenue_scale": "x", "h
 before_t = (SBX / "world-model/customer/targets.csv").read_text()
 _orig = engine.subprocess.run
 def _fail_audit(cmd, *a, **k):
-    if list(cmd[:2]) == ["python3", "mcp/audit.py"]:
+    if list(cmd[:2]) == [sys.executable, "mcp/audit.py"]:
         class R:  # simulate a red audit
             returncode = 1; stdout = "DEFECTS:\n - simulated"
         return R()
@@ -164,7 +164,7 @@ except ValueError as e:
     record("not pending" in str(e), "reject: cannot overwrite an applied proposal", str(e))
 
 # ---- 10. AUDIT FAILS CLOSED without pyyaml (a commit-gating safety net must never degrade to green) ----
-r = subprocess.run(["python3", "-c",
+r = subprocess.run([sys.executable, "-c",
                     "import sys; sys.modules['yaml']=None; exec(compile(open('mcp/audit.py').read(), 'audit.py', 'exec'))"],
                    cwd=SBX, capture_output=True, text=True)
 record(r.returncode != 0 and "fails closed" in r.stdout,
@@ -174,7 +174,7 @@ record(r.returncode != 0 and "fails closed" in r.stdout,
 biz_csv = SBX / "world-model/company/businesses.csv"
 _orig_biz = biz_csv.read_text()
 biz_csv.write_text(_orig_biz.rstrip() + "\nghostco,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,n.d.,main,acquired,bsp-f1,no node\n")
-r = subprocess.run(["python3", "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
+r = subprocess.run([sys.executable, "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
 record(r.returncode != 0 and "csv row without node file" in r.stdout and "Traceback" not in r.stderr,
        "audit: missing node file → clean defect, not an uncaught FileNotFoundError", (r.stdout + r.stderr)[-160:])
 biz_csv.write_text(_orig_biz)
@@ -183,7 +183,7 @@ biz_csv.write_text(_orig_biz)
 deals_csv = SBX / "world-model/company/deals.csv"
 _orig_deals = deals_csv.read_text()
 deals_csv.write_text(_orig_deals.rstrip() + "\nghostdeal,n.d.,2026,2026,acquisition,999,,,,bsp-f1,\"$1 [to-validate — press only]\"\n")
-r = subprocess.run(["python3", "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
+r = subprocess.run([sys.executable, "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
 record(r.returncode != 0 and "press-only" in r.stdout,
        "audit: filing-sourced deal tagged press-only → defect (Tractive regression guard)", r.stdout[-160:])
 deals_csv.write_text(_orig_deals)

@@ -18,6 +18,7 @@ import io
 import json
 import re
 import subprocess
+import sys
 import time
 import uuid
 from pathlib import Path
@@ -109,10 +110,11 @@ def _apply_edit(e: dict) -> None:
         pat = re.compile(rf"^(  {re.escape(e['prop'])}: ).*$", re.M)
         if not pat.search(text):
             raise ValueError(f"property {e['prop']} not found in {e['file']}")
-        v = e["value"]
-        if any(c in str(v) for c in ':#{}[],&*?|>%@`"\''):
-            v = f'"{v}"'
-        p.write_text(pat.sub(rf"\g<1>{v}", text, count=1), encoding="utf-8")
+        v = str(e["value"])
+        if any(c in v for c in ':#{}[],&*?|>%@`"\''):
+            v = json.dumps(v, ensure_ascii=False)  # valid YAML double-quoted scalar (escapes embedded ")
+        # replace via a function so backslashes in v (json escapes) are not re-read as regex group refs
+        p.write_text(pat.sub(lambda m: m.group(1) + v, text, count=1), encoding="utf-8")
         return
     raise ValueError(f"unknown edit op: {e['op']}")
 
@@ -169,7 +171,7 @@ def _props_block(d: dict) -> str:
     for k, v in d.items():
         v = str(v)
         if any(c in v for c in ':#{}[],&*?|>%@`"\''):
-            v = f'"{v}"'
+            v = json.dumps(v, ensure_ascii=False)  # valid YAML double-quoted scalar (escapes embedded ")
         out.append(f"  {k}: {v}")
     return "\n".join(out) + "\n"
 
@@ -196,24 +198,27 @@ def _source(p):
 
 
 # HQ-gate geography — a European or North-American HQ counts however it is written: the continent,
-# a country name, or an ISO code. (Defect-to-test: "Italy" was rejected because the gate literally
-# substring-matched the word "Europe"; a real European HQ must pass regardless of phrasing.)
+# a country name, or an ISO code. Two defects-to-test: (1) "Italy" was rejected because the gate
+# substring-matched the word "Europe"; a real European HQ must pass regardless of phrasing. (2) the bare
+# token "america" substring-matched "South America" / "Latin America", admitting out-of-region targets —
+# so region names match on WORD BOUNDARIES and "america" alone is NOT a region.
 _EU_NAMES = ("europe", "germany", "france", "italy", "spain", "netherlands", "sweden", "denmark",
              "norway", "finland", "ireland", "united kingdom", "britain", "england", "scotland",
              "poland", "austria", "belgium", "portugal", "switzerland", "luxembourg", "czech",
              "greece", "romania", "hungary", "estonia", "latvia", "lithuania", "slovenia",
              "slovakia", "croatia", "bulgaria", "cyprus", "malta", "iceland")
-_NA_NAMES = ("north america", "united states", "u.s.", "usa", "america", "canada")
+_NA_NAMES = ("north america", "united states", "usa", "canada", "puerto rico")  # NOT bare "america"
+_REGION_RE = re.compile(r"\b(" + "|".join(re.escape(n) for n in _EU_NAMES + _NA_NAMES) + r")\b", re.I)
 _EU_CC = set("DE FR IT ES NL SE DK NO FI IE GB UK PL AT BE PT CH LU CZ GR RO HU EE LV LT SI SK HR BG CY MT IS".split())
-_NA_CC = {"US", "CA"}
+_NA_CC = {"US", "USA", "CA", "PR"}
 
 
 def _hq_in_region(hq: str) -> bool:
-    """True if the HQ string names Europe or North America — by continent, country, or ISO code."""
-    s = (hq or "").lower()
-    if any(n in s for n in _EU_NAMES + _NA_NAMES):
+    """True if the HQ string names Europe or North America — by continent, country, or ISO code.
+    Region names are matched on word boundaries, so "South America" does NOT pass the North-America gate."""
+    if _REGION_RE.search(hq or ""):
         return True
-    toks = {t.strip(".,;()[]").upper() for t in (hq or "").split()}
+    toks = {t.strip(".,;()[]").replace(".", "").upper() for t in (hq or "").replace(",", " ").split()}
     return bool(toks & (_EU_CC | _NA_CC))
 
 
@@ -229,7 +234,9 @@ def _screen(p):
     checks, fails = [], []
     hq_ok = _hq_in_region(row["hq"])
     (checks if hq_ok else fails).append(f"hq gate: '{row['hq']}' {'OK' if hq_ok else 'FAIL (HQ not in Europe / North America)'}")
-    it_heavy = "IT service" in row["revenue_model"]
+    # normalize case + separators so "IT services" / "it-services" / "It Services" all match (defect-to-test:
+    # the exclusion was a case-sensitive substring, trivially evaded by capitalization or a hyphen)
+    it_heavy = "itservice" in re.sub(r"[^a-z]", "", row["revenue_model"].lower())
     (fails if it_heavy else checks).append(f"revenue-model gate: '{row['revenue_model']}' {'FAIL (IT-services-heavy)' if it_heavy else 'OK'}")
     rs = row["revenue_scale"]
     rs_ok = bool(rs) and rs != "n.d."
@@ -466,7 +473,7 @@ def apply(proposal_id: str, approved_by: str | None = None) -> dict:
     try:
         for e in diff:
             _apply_edit(e)
-        audit = subprocess.run(["python3", "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
+        audit = subprocess.run([sys.executable, "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
         if audit.returncode != 0:
             raise RuntimeError(f"audit RED after write:\n{audit.stdout}")
         # mark applied, then commit; if the commit fails, the except rolls the status back to pending (below),
@@ -479,12 +486,18 @@ def apply(proposal_id: str, approved_by: str | None = None) -> dict:
         # ephemeral proposal record (proposals/) is gitignored and deliberately not committed.
         if touched:
             subprocess.run(["git", "add", "--", *touched], cwd=ROOT, check=True, capture_output=True)
-            subprocess.run(["git", "commit", "-q",
-                            "-m", f"action: {prop['action']} ({proposal_id}) — approved by {approved_by or 'auto'}\n\n"
-                                  f"Committed by the Bending Spoons action engine; the commit contains only the "
-                                  f"declared transaction, and the audit was green at write-back.",
-                            "--", *touched],
-                           cwd=ROOT, check=True, capture_output=True)
+            # a no-op transaction (e.g. transform to the CURRENT value) stages nothing — a plain
+            # `git commit` would then fail "nothing to commit" and raise CalledProcessError; treat a
+            # zero-diff apply as a clean idempotent success instead of an error.
+            has_staged = subprocess.run(["git", "diff", "--cached", "--quiet", "--", *touched],
+                                        cwd=ROOT, capture_output=True).returncode != 0
+            if has_staged:
+                subprocess.run(["git", "commit", "-q",
+                                "-m", f"action: {prop['action']} ({proposal_id}) — approved by {approved_by or 'auto'}\n\n"
+                                      f"Committed by the Bending Spoons action engine; the commit contains only the "
+                                      f"declared transaction, and the audit was green at write-back.",
+                                "--", *touched],
+                               cwd=ROOT, check=True, capture_output=True)
     except Exception:
         _rollback()
         prop.update({"status": "pending"})          # never leave a half-applied proposal marked applied
