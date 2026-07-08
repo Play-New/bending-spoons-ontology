@@ -7,12 +7,13 @@ Composition and execution of the skills stays LLM-side and human-gated — the
 server exposes the contracts and the data, it does not act on the world by itself.
 
 Run:  python server.py           (stdio transport, for an MCP client)
-Deps: pip install -r requirements.txt   (mcp, pyyaml)
+Deps: pip install -r requirements.txt   (mcp, pyyaml, pydantic)
 """
 from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Optional
 
@@ -325,7 +326,7 @@ def propose_action(action: str, params: dict) -> str:
     """
     try:
         prop = _engine.propose(action, params)
-    except (ValueError, RuntimeError) as e:
+    except Exception as e:
         return f"REFUSED: {e}"
     return json.dumps(prop, indent=2, ensure_ascii=False)
 
@@ -360,7 +361,7 @@ async def apply_action(proposal_id: str, ctx: Context, approved_by: str = "") ->
                 pass  # client without elicitation support → engine will refuse below
     try:
         prop = _engine.apply(proposal_id, approved_by or None)
-    except (ValueError, RuntimeError) as e:
+    except Exception as e:
         return f"REFUSED: {e}"
     return f"APPLIED {prop['id']} (approved by {prop['approved_by']}); audit green, committed."
 
@@ -378,7 +379,7 @@ def reject_action(proposal_id: str, reason: str = "") -> str:
     """Reject a pending proposal (the human gate saying no)."""
     try:
         p = _engine.reject(proposal_id, reason)
-    except (ValueError, RuntimeError) as e:
+    except Exception as e:
         return f"REFUSED: {e}"
     return f"REJECTED {p['id']}: {reason or 'no reason given'}"
 
@@ -456,6 +457,11 @@ def radar_discover(region: str = "us", countries: str = "") -> str:
     passes = [s for s in d["survivors"] if s["sector"] == "PASS"]
     judge = [s for s in d["survivors"] if s["sector"] == "JUDGE"]
     if not passes and not judge:
+        uni_err = d.get("universe_errors") or []
+        if uni_err and d.get("total_in_band", 0) == 0:   # the revenue-frame fetch failed — NOT an empty universe
+            return ("US universe UNAVAILABLE — the revenue-frame fetch failed: " + "; ".join(uni_err) +
+                    "  (likely SEC rate-limiting; retry). This is NOT a genuine empty result — the universe "
+                    "could not be read. Is RADAR_CONTACT set for SEC EDGAR?")
         er = d.get("errored", 0)
         hint = (f" — but {er} of {d['screened']} fetches were unreachable (likely SEC rate-limiting; retry)"
                 if er else ". Is RADAR_CONTACT set for SEC EDGAR?")
@@ -609,10 +615,12 @@ def hire(candidate_profile: str) -> str:
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
 def run_audit() -> str:
-    """Run the model's integrity audit (the 11 §5 invariants + the standing defect-to-test checks) and
-    return the result — green, or the exact defects. Read-only; run it after any batch of edits."""
+    """Run the model's integrity audit (the mechanically-enforceable subset of the §5 invariants + the
+    standing defect-to-test checks; see mcp/audit-contract.md for which invariants are mechanical vs
+    review-verified) and return the result — green, or the exact defects. Read-only; runs under the
+    server's own interpreter. Run it after any batch of edits."""
     import subprocess
-    r = subprocess.run(["python3", "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
+    r = subprocess.run([sys.executable, "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
     return (r.stdout or r.stderr).strip() or ("AUDIT GREEN" if r.returncode == 0 else "AUDIT RED (no output)")
 
 

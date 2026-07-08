@@ -190,7 +190,7 @@ _clean = (not _biz_node.exists() and not _if_node.exists()
     (R["cases"].append(("FAIL", "close commit-failure rollback", f"biz_node={_biz_node.exists()} if_node={_if_node.exists()}")), R.__setitem__("fail", R["fail"] + 1))
 
 # ---- integrity after the full run ----
-audit = subprocess.run(["python3", "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
+audit = subprocess.run([sys.executable, "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
 (R["cases"].append(("PASS", "audit green after full lifecycle", "")), R.__setitem__("pass", R["pass"] + 1)) \
     if audit.returncode == 0 else (R["cases"].append(("FAIL", "audit green after full lifecycle", audit.stdout[:200])),
                                    R.__setitem__("fail", R["fail"] + 1))

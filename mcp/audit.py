@@ -56,6 +56,9 @@ if yaml is not None:
             for c in prop_cols:
                 if node_props.get(c) != row[c]:
                     defects.append(f"node↔csv drift: {name}.{c}: node={node_props.get(c)!r} csv={row[c]!r}")
+            extra = set(node_props) - set(prop_cols)   # inv.2 static 1:1: a property in the node but not in
+            if extra:                                   # §1/backing is a schema amendment smuggled as a node edit
+                defects.append(f"undeclared node property (not in §1/csv): {name} -> {sorted(extra)}")
             if fm.get('id') != name + suffix:
                 defects.append(f"node id != csv key: {name}")
 
@@ -106,6 +109,9 @@ for row in csv.DictReader(l for l in open('world-model/company/deals.csv') if no
 # business/interface nodes: structured properties in frontmatter; no Deal-data or undeclared top-level fields (inv. 2, Deal ⊥ Business)
 for f in glob.glob('world-model/company/businesses/*.md') + [p for p in glob.glob('interfaces/*.md') if not p.endswith('README.md')]:
     t = open(f, encoding='utf-8').read()
+    if not t.startswith('---'):  # clean defect, not an uncaught IndexError on t.split('---')[1]
+        defects.append(f"no frontmatter: {f}")
+        continue
     fm = t.split('---')[1]
     if '\nproperties:' not in fm:
         defects.append(f"no frontmatter properties: {f}")
@@ -127,6 +133,17 @@ for f in glob.glob('capabilities/actions/*.md'):
                   'submission criteria:', 'governance:', 'side-effects:', 'backing:'):
         if field not in t:
             defects.append(f"missing '{field}': {f}")
+
+# inv. 1 (contract ↔ ontology.md §2, both ways at contract granularity): every action contract must be
+# referenced in §2's "backed by" column, and §2 may not name an action contract with no file. Verb
+# PHRASING (§2 column 1) stays review-verified — see audit-contract.md. Catches a renamed/deleted §2 backing.
+_onto = open('ontology.md', encoding='utf-8').read()
+if '## 2.' in _onto:
+    _sec2 = _onto.split('## 2.')[1].split('\n## ')[0]
+    _backed = set(re.findall(r'`([a-z][a-z-]+)`', _sec2))
+    for _stem in {os.path.splitext(os.path.basename(f))[0] for f in glob.glob('capabilities/actions/*.md')}:
+        if _stem not in _backed:
+            defects.append(f"contract not referenced in ontology.md §2 (inv.1 contract↔§2): {_stem}")
 
 # every backtick-quoted repo path in a model file resolves (the wrong-depth defect, generalized)
 import os

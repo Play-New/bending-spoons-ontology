@@ -20,7 +20,7 @@ suites = []
 
 
 def run(name, script, target, extra=()):
-    r = subprocess.run(["python3", str(TESTS / script), str(target), *extra],
+    r = subprocess.run([sys.executable, str(TESTS / script), str(target), *extra],
                        capture_output=True, text=True)
     try:
         data = json.loads(r.stdout.strip().splitlines()[-1])
@@ -48,7 +48,7 @@ run("radar-sweep", "test_radar.py", ROOT, ("--live",) if LIVE else ())
 run("mcp server surface", "test_server.py", ROOT)
 run("acceptance: try-it.md questions", "test_questions.py", ROOT)
 
-audit = subprocess.run(["python3", "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
+audit = subprocess.run([sys.executable, "mcp/audit.py"], cwd=ROOT, capture_output=True, text=True)
 suites.append(("model audit (11 invariants + standing checks)",
                {"pass": 1, "fail": 0, "cases": [("PASS", "audit green", "")]} if audit.returncode == 0
                else {"pass": 0, "fail": 1, "cases": [("FAIL", "audit red", audit.stdout[:300])]}))

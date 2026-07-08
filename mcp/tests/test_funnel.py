@@ -39,7 +39,7 @@ record(isinstance(sc, float), f"radar: sweep+maturity ran (score {sc}, fired {fi
 
 # 2. graceful CLI guards (the round-2 regressions)
 run = lambda *args: subprocess.run(
-    ["python3", str(SBX / ".claude/skills/radar-sweep/scripts/radar_sweep.py"), *args],
+    [sys.executable, str(SBX / ".claude/skills/radar-sweep/scripts/radar_sweep.py"), *args],
     capture_output=True, text=True)
 r = run("Xyzzy Nonexistent App", "--interest")
 record("no Wikipedia article" in r.stdout, "regression: interest 404 graceful")
@@ -66,7 +66,7 @@ record(prop["gate"] == "human", "engine: source proposal is human-gated")
 engine.apply(prop["id"], "funnel-test-human")
 p2 = engine.propose("screen", {"target": "FunnelCo"})
 engine.apply(p2["id"])
-audit = subprocess.run(["python3", "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
+audit = subprocess.run([sys.executable, "mcp/audit.py"], cwd=SBX, capture_output=True, text=True)
 record(audit.returncode == 0, "funnel: audit green after radar→source→screen")
 
 # 4. MCP-NATIVE: the scouting/hire/audit tier is drivable as MCP tools (the whole loop from any client)
