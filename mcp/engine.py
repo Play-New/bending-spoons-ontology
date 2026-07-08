@@ -234,9 +234,10 @@ def _screen(p):
     checks, fails = [], []
     hq_ok = _hq_in_region(row["hq"])
     (checks if hq_ok else fails).append(f"hq gate: '{row['hq']}' {'OK' if hq_ok else 'FAIL (HQ not in Europe / North America)'}")
-    # normalize case + separators so "IT services" / "it-services" / "It Services" all match (defect-to-test:
-    # the exclusion was a case-sensitive substring, trivially evaded by capitalization or a hyphen)
-    it_heavy = "itservice" in re.sub(r"[^a-z]", "", row["revenue_model"].lower())
+    # normalize case + hyphens/underscores to spaces, then match "it service(s)" on WORD BOUNDARIES so
+    # "IT services" / "it-services" / "It Services" all match but "credit services" / "audit services" do NOT
+    # (defect-to-test: the old gate was a case-sensitive substring, trivially evaded by capitalization or a hyphen)
+    it_heavy = bool(re.search(r"\bit services?\b", re.sub(r"[-_]", " ", row["revenue_model"].lower())))
     (fails if it_heavy else checks).append(f"revenue-model gate: '{row['revenue_model']}' {'FAIL (IT-services-heavy)' if it_heavy else 'OK'}")
     rs = row["revenue_scale"]
     rs_ok = bool(rs) and rs != "n.d."

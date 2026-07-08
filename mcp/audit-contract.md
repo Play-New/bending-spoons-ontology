@@ -27,7 +27,7 @@ no fully mechanical check). "AUDIT GREEN" therefore means "every mechanical chec
 invariants proven"; the ⊘ items are the reviewer's charge, not a machine guarantee:
    1. ◐ every contract verb ↔ ontology.md §2, declared once, same transaction, checked BOTH ways;
       a §2 row marked "contract pending" commits nothing
-      (✓ contract-file ↔ §2 backing, both ways; ⊘ the verb PHRASING in §2 column 1)
+      (✓ every action contract IS referenced in §2's backing; ⊘ the reverse direction + the verb PHRASING in §2 column 1)
    2. ✓ every property a transaction writes is declared in §1 and is a backing-dataset column (1:1);
       statically, a node's properties are exactly §1's for its type (node↔csv values AND key-set checked)
    3. ◐ every link a transaction writes is declared once in §1, object↔object, declared direction
