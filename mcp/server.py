@@ -142,9 +142,16 @@ def get_node(path: str) -> str:
     """Return the full content of one node by its repo-relative path.
 
     Example path: 'world-model/company/platform.md'. Use list_nodes or
-    search to discover paths.
+    search to discover paths. Serves model content only — VCS internals (.git)
+    and the large raw filing captures (*-fulltext.txt, which get_source also
+    withholds) are refused; use search for a fact + its ~L ref, then read the
+    filing directly.
     """
     f = _resolve(path)
+    parts = f.relative_to(ROOT).parts if f != ROOT else ()
+    if ".git" in parts or "fulltext" in f.name:
+        return (f"Refused: {path} is outside the served model — .git is internal and the *-fulltext.txt "
+                f"filings are withheld here (use search for a fact + its ~L ref, then read the filing directly).")
     if not f.exists():
         return f"Not found: {path}"
     return f.read_text(encoding="utf-8")

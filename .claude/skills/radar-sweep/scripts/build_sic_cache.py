@@ -64,5 +64,21 @@ for rnd in range(4):  # retry the misses a few times — EDGAR throttling is tra
 
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "edgar_sic_hq.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
+
+# coverage guard (defect-to-test): a partial build — EDGAR throttled the per-CIK /submissions/ fetches
+# through all retries — must never clobber a more complete cache, or discover() silently under-screens
+# afterward. Refuse to shrink the index; keep the larger existing one and re-run when EDGAR isn't throttling.
+new_n = len(cache)
+existing_n = 0
+if os.path.exists(out):
+    try:
+        existing_n = len(json.load(open(out, encoding="utf-8")).get("sic_hq", {}))
+    except Exception:
+        existing_n = 0
+coverage = new_n / len(band) if band else 0
+if new_n < existing_n:
+    print(f"REFUSING to overwrite: this build indexed {new_n} filers but the existing cache holds "
+          f"{existing_n} — keeping the larger index (EDGAR was likely throttling). Re-run later.", flush=True)
+    sys.exit(1)
 json.dump({"as_of": "CY2024", "band_usd_m": cfg["band_usd_m"], "sic_hq": cache}, open(out, "w"))
-print(f"WROTE {os.path.relpath(out)} — {len(cache)} of {len(band)} in-band filers indexed", flush=True)
+print(f"WROTE {os.path.relpath(out)} — {new_n} of {len(band)} in-band filers indexed ({coverage:.0%})", flush=True)
